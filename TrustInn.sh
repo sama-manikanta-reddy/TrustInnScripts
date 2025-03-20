@@ -222,7 +222,7 @@ validate_install_path "$INSTALL_PATH"
 
 # Proceed with installation steps...
 echo "Proceeding with installation in: $INSTALL_PATH"
-INSTALL_PATH="$INSTALL_PATH/TrustInn"
+INSTALL_PATH="${INSTALL_PATH}TrustInn"
 mkdir -p "$INSTALL_PATH"
 cd "$INSTALL_PATH"
 

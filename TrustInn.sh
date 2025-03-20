@@ -114,9 +114,11 @@ install_static_analysis() {
     echo "Downloading Static Analysis scripts from GitHub..."
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/static-analysis/clang.sh" -O clang.sh || { echo "Failed to download clang.sh"; exit 1; }
     chmod +x clang.sh
+    sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" clang.sh
 
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/static-analysis/run-Framma-C.sh" -O run-Framma-C.sh || { echo "Failed to download run-Framma-C.sh"; exit 1; }
     chmod +x run-Framma-C.sh
+    sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" run-Framma-C.sh
 
     popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
     echo "✅ Static Analysis installation complete!"

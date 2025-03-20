@@ -59,9 +59,11 @@ def execute(tool_name, file_path):
 # Implement specific functions for each tool
 def execute_cbmc(file_path):
     output_text.insert(tk.END, "Running CBMC...\n")
+    expanded_path = os.path.expanduser(tool_install_path)
+    script_path = os.path.join(expanded_path, "C-Tools", "CBMC", "run.sh")
     # Example: Run CBMC with subprocess
     try:
-        result = subprocess.run(["cbmc", file_path], capture_output=True, text=True)
+        result = subprocess.run([script_path, file_path], capture_output=True, text=True)
         output_text.insert(tk.END, result.stdout)
         if result.stderr:
             output_text.insert(tk.END, "Errors:\n" + result.stderr)

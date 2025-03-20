@@ -154,6 +154,7 @@ install_esbmc() {
     cmake .. -DENABLE_Z3=1 -DENABLE_PYTHON_FRONTEND=On || { echo "CMake configuration failed"; exit 1; }
     make -j4 || { echo "Build failed"; exit 1; }
 
+    cd ../..
     echo "Downloading ESBMC running script from GitHub..."
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/esbmc/run.sh" -O run.sh
     chmod +x run.sh || { echo "Failed to set execute permissions"; exit 1; }

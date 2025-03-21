@@ -67,6 +67,7 @@ install_cbmc() {
     sudo apt install cbmc -y || { echo "CBMC installation failed"; exit 1; }
 
     echo "Downloading CBMC running script from GitHub..."
+    wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/cbmc/README.md" -O README.md
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/cbmc/run.sh" -O run.sh
     chmod +x run.sh || { echo "Failed to set execute permissions"; exit 1; }
 
@@ -112,6 +113,7 @@ install_static_analysis() {
     fi
 
     echo "Downloading Static Analysis scripts from GitHub..."
+    wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/static-analysis/README.md" -O README.md
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/static-analysis/clang.sh" -O clang.sh || { echo "Failed to download clang.sh"; exit 1; }
     chmod +x clang.sh
     sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" clang.sh
@@ -159,6 +161,7 @@ install_esbmc() {
 
     cd ../..
     echo "Downloading ESBMC running script from GitHub..."
+    wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/esbmc/README.md" -O README.md
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/esbmc/run.sh" -O run.sh
     chmod +x run.sh || { echo "Failed to set execute permissions"; exit 1; }
     sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" run.sh

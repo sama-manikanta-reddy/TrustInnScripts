@@ -207,8 +207,9 @@ def Python_Tab_Content(tab):
     
     output_text = tk.Text(output_frame, bg="black", fg="white")
     output_text.pack(expand=True, fill="both")
-    
 
+def Java_Tab_Content(tab):
+    tk.Label(tab, text="Coming soon..", font=("Arial", 14)).pack(pady=20)
 
 # Main Window setup
 MainWindow = tk.Tk()
@@ -226,14 +227,17 @@ Notebook.pack(expand=True, fill="both")
 # Create Frames (Tabs)
 C_Tab = ttk.Frame(Notebook)
 Python_Tab = ttk.Frame(Notebook)
+Java_Tab = ttk.Frame(Notebook)
 
 # Add tabs to Notebook
 Notebook.add(C_Tab, text="C")
 Notebook.add(Python_Tab, text="Python")
+Notebook.add(Java_Tab, text="Java")
 
 # Add content to tabs
 C_Tab_Content(C_Tab)
 Python_Tab_Content(Python_Tab)
+Java_Tab_Content(Java_Tab)
 
 # Main Loop
 MainWindow.mainloop()

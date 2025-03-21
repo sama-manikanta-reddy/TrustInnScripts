@@ -1,4 +1,4 @@
-#!/bin/bash
+]#!/bin/bash
 
 # Ensure a file argument is provided
 if [ "$#" -ne 1 ]; then
@@ -7,16 +7,10 @@ if [ "$#" -ne 1 ]; then
 fi
 
 export FILE_NAME="$1"
-export INSTALL_PATH=""
+export INSTALL_PATH="/home/test/Documents/TrustInn"
 
-# Get the base name of the file (without the extension)
+FILE_PATH=$(realpath "$FILE_NAME") || { echo "Error: Unable to resolve file path for $FILE_NAME"; exit 1; }
 FILE_NAME=$(basename "$FILE_NAME" .py)
-
-# Ensure the file exists
-if [ ! -f "$FILE_NAME" ]; then
-    echo "Error: File '$FILE_NAME' not found!"
-    exit 1
-fi
 
 # Ensure Python 3 is installed
 if ! command -v python3 &>/dev/null; then
@@ -51,18 +45,19 @@ if [ ! -x "./esbmc/build/src/esbmc/esbmc" ]; then
 fi
 
 mkdir -p ./Results/
-OUTPUT_FILE="./Results/${FILE_BASE_NAME}.txt"
+OUTPUT_FILE="./Results/${FILE_NAME}.txt"
 
 # Run ESBMC
 echo "Running ESBMC on ${FILE_NAME}.py..."
-./esbmc/build/src/esbmc/esbmc ${FILE_NAME}.py --python python3 | tee "$OUTPUT_FILE"
+echo "${FILE_PATH}"
+./esbmc/build/src/esbmc/esbmc ${FILE_PATH} --python python3 &> "$OUTPUT_FILE"
 
 # Check ESBMC exit status
 if [ "${PIPESTATUS[0]}" -ne 0 ]; then
-    echo "ESBMC test failed! Output saved in '$OUTPUT_FILE'"
+    echo "ESBMC test failed!"
     exit 1
 fi
-
+cat $OUTPUT_FILE
 echo "ESBMC test completed successfully. Output saved in '$OUTPUT_FILE'"
 
 # Deactivate the virtual environment

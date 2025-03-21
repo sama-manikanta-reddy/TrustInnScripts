@@ -16,7 +16,7 @@ FILE_PATH=$(realpath "$FILE_NAME") || { echo "Error: Unable to resolve file path
 FILE_NAME=$(basename "$FILE_NAME" .c)
 
 # Create the directory to store output files
-SAVE_DIR=${INSTALL_PATH}/C-Tools/StaticAnalysis/Results/${FILE_NAME}/frammac
+SAVE_DIR=${INSTALL_PATH}/C-Tools/StaticAnalysis/Results/${FILE_NAME}/framac
 mkdir -p ${SAVE_DIR} || { echo "Error: Failed to create directory ${SAVE_DIR}"; exit 1; }
 
 # Run Frama-C analysis

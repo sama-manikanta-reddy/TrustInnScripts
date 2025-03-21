@@ -101,7 +101,7 @@ def execute_static_analysis(file_path):
         if result.stderr:
             output_text.insert(tk.END, "Errors:\n" + result.stderr)
         output_text.insert(tk.END, "Running Framma-C script...\n")
-        result = subprocess.run([framac_script_path, llvm_path ,file_path], capture_output=True, text=True)
+        result = subprocess.run([framac_script_path, file_path], capture_output=True, text=True)
         output_text.insert(tk.END, result.stdout)
         if result.stderr:
             output_text.insert(tk.END, "Errors:\n" + result.stderr)

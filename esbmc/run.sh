@@ -7,6 +7,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 export FILE_NAME="$1"
+export INSTALL_PATH=""
 
 # Get the base name of the file (without the extension)
 FILE_NAME=$(basename "$FILE_NAME" .py)
@@ -22,6 +23,9 @@ if ! command -v python3 &>/dev/null; then
     echo "Error: Python3 is not installed!"
     exit 1
 fi
+
+WORK_DIR="${INSTALL_PATH}/Python-Tools/ESBMC"
+cd ${WORK_DIR}
 
 if [ ! -d ".venv" ]; then
 	echo "Creating virtual environment..."

@@ -70,7 +70,7 @@ install_cbmc() {
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/cbmc/run.sh" -O run.sh
     chmod +x run.sh || { echo "Failed to set execute permissions"; exit 1; }
 
-    popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
+	popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
     echo "✅ CBMC installation complete!"
 }
 
@@ -116,9 +116,9 @@ install_static_analysis() {
     chmod +x clang.sh
     sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" clang.sh
 
-    wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/static-analysis/run-Framma-C.sh" -O run-Framma-C.sh || { echo "Failed to download run-Framma-C.sh"; exit 1; }
-    chmod +x run-Framma-C.sh
-    sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" run-Framma-C.sh
+    wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/static-analysis/run-Frama-C.sh" -O run-Frama-C.sh || { echo "Failed to download run-Framma-C.sh"; exit 1; }
+    chmod +x run-Frama-C.sh
+    sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" run-Frama-C.sh
 
     popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
     echo "✅ Static Analysis installation complete!"
@@ -161,6 +161,7 @@ install_esbmc() {
     echo "Downloading ESBMC running script from GitHub..."
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/esbmc/run.sh" -O run.sh
     chmod +x run.sh || { echo "Failed to set execute permissions"; exit 1; }
+    sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" run.sh
 
     echo "✅ ESBMC installation complete!"
 
@@ -215,6 +216,20 @@ install_afl() {
     popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
 }
 
+# Function to install DSE
+install_dse() {
+    local dse_dir="./Python-Tools/DSE"
+
+    echo "Installing DSE in $dse_dir..."
+    mkdir -p "$dse_dir"
+    pushd "$dse_dir" > /dev/null || { echo "Failed to enter $dse_dir"; exit 1; }
+
+    # To be added
+
+    echo "✅ DSE installation complete!"
+
+    popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
+}
 
 # Main script execution
 sudo -v

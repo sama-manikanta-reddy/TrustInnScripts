@@ -3,7 +3,7 @@ import os
 import tkinter as tk
 from tkinter import ttk, filedialog
 
-tool_install_path = "./"
+tool_install_path = "/home/test/Documents/TrustInn"
 
 # Helper functions
 def set_window_size(window, percentage):
@@ -122,13 +122,13 @@ def execute_esbmc(file_path, output_text):
     try:
         result = subprocess.run([script_path, file_path], capture_output=True, text=True)
         output_text.insert(tk.END, result.stdout)
-        if result.stderr:
-            output_text.insert(tk.END, "Errors:\n" + result.stderr)
+        #if result.stderr:
+        #    output_text.insert(tk.END, "Errors:\n" + result.stderr)
     except Exception as e:
-        output_text.insert(tk.END, f"Error executing CBMC: {str(e)}\n")
+        output_text.insert(tk.END, f"Error executing ESBMC: {str(e)}\n")
 
 def execute_dse(file_path, output_text):
-	output_text.insert(tk.END, "Running ESBMC...\n")
+	output_text.insert(tk.END, "Running DSE...\n")
 	# DSE specific implementation
 	# ...
 

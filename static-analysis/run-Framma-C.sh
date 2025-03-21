@@ -20,11 +20,12 @@ SAVE_DIR=${INSTALL_PATH}/C-Tools/StaticAnalysis/Results/${FILE_NAME}/frammac
 mkdir -p ${SAVE_DIR} || { echo "Error: Failed to create directory ${SAVE_DIR}"; exit 1; }
 
 # Run Frama-C analysis
+eval "$(opam env --switch=4.14.1)"
 frama-c -eva -eva-no-remove-redundant-alarms \
     -eva-all-rounding-modes-constants \
     -eva-join-results -eva-report-red-statuses \
     "${SAVE_DIR}/${FILE_NAME}-red" "$FILE_PATH" &> "${SAVE_DIR}/${FILE_NAME}-report.txt" || { echo "Error: Frama-C analysis failed"; exit 1; }
-
+    
 # Process the output of Frama-C
 sed '/division_by_zero/!d' "${SAVE_DIR}/${FILE_NAME}-red" | 
     cut -f1,2,4-9 --complement |

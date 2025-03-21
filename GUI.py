@@ -3,7 +3,7 @@ import os
 import tkinter as tk
 from tkinter import ttk, filedialog
 
-tool_install_path = "~/TrustInn"
+tool_install_path = "/home/test/Documents/TrustInn"
 
 # Helper functions
 def set_window_size(window, percentage):
@@ -59,7 +59,6 @@ def execute(tool_name, file_path):
 # Implement specific functions for each tool
 def execute_cbmc(file_path):
     output_text.insert(tk.END, "Running CBMC...\n")
-    expanded_path = os.path.expanduser(tool_install_path)
     script_path = os.path.join(expanded_path, "C-Tools", "CBMC", "run.sh")
     # Example: Run CBMC with subprocess
     try:
@@ -92,8 +91,22 @@ def execute_sc_mcc_cbmc(file_path):
 
 def execute_static_analysis(file_path):
     output_text.insert(tk.END, "Running Static Analysis...\n")
-    # Static Analysis specific implementation
-    # ...
+    clang_script_path = os.path.join(expanded_path, "C-Tools", "StaticAnalysis", "clang.sh")
+    framac_script_path = os.path.join(expanded_path, "C-Tools", "StaticAnalysis", "run-Framma-C.sh")
+    llvm_path = os.path.join(expanded_path, "C-Tools" , "StaticAnalysis", "LLVM-20.1.0-Linux-X64")
+    try:
+        output_text.insert(tk.END, "Running clang script...\n")
+        result = subprocess.run([clang_script_path, llvm_path ,file_path], capture_output=True, text=True)
+        output_text.insert(tk.END, result.stdout)
+        if result.stderr:
+            output_text.insert(tk.END, "Errors:\n" + result.stderr)
+        output_text.insert(tk.END, "Running Framma-C script...\n")
+        result = subprocess.run([framac_script_path, llvm_path ,file_path], capture_output=True, text=True)
+        output_text.insert(tk.END, result.stdout)
+        if result.stderr:
+            output_text.insert(tk.END, "Errors:\n" + result.stderr)
+    except Exception as e:
+        output_text.insert(tk.END, f"Error executing Static Analysis: {str(e)}\n")
 
 def C_Tab_Content(tab):
     file_frame = ttk.Frame(tab)
@@ -138,8 +151,10 @@ def Python_Tab_Content(tab):
 
 # Main Window setup
 MainWindow = tk.Tk()
+expanded_path = os.path.expanduser(tool_install_path)
+icon_path = os.path.join(expanded_path, "logo.png")
 MainWindow.title("TrustInn")
-MainWindow.iconphoto(True, tk.PhotoImage(file="./logo.png"))
+MainWindow.iconphoto(True, tk.PhotoImage(file=icon_path))
 set_window_size(MainWindow, 0.75)
 MainWindow.resizable(True, True)
 

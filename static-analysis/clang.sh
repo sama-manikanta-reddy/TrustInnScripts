@@ -37,3 +37,4 @@ mv ${FILE_NAME}.ll ${SAVE_DIR} || { echo "Error: Failed to move ${FILE_NAME}.ll"
 mv ${FILE_NAME}.plist ${SAVE_DIR} || { echo "Error: Failed to move ${FILE_NAME}.plist"; exit 1; }
 
 echo "Process completed successfully."
+echo "Results saved in ${SAVE_DIR}"

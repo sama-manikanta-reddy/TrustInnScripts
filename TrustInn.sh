@@ -70,7 +70,7 @@ install_cbmc() {
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/cbmc/run.sh" -O run.sh
     chmod +x run.sh || { echo "Failed to set execute permissions"; exit 1; }
 
-	popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
+    popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
     echo "✅ CBMC installation complete!"
 }
 

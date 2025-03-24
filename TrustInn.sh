@@ -233,6 +233,7 @@ install_dse() {
     rm -rf tool
     mv PyExZ3/dse_run.sh .
     chmod +x dse_run.sh || { echo "Failed to set execute permissions"; exit 1; }
+    sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" dse_run.sh
     
     echo "✅ DSE installation complete!"
 

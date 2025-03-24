@@ -228,7 +228,12 @@ install_dse() {
     pushd "$dse_dir" > /dev/null || { echo "Failed to enter $dse_dir"; exit 1; }
 
     # To be added
-
+    git clone https://github.com/555shivv/tool.git || { echo "Error: Failed to clone repository!"; exit 1; }
+    mv tool/PyExZ3-clone .
+    rm -rf tool
+    mv PyExZ3/dse_run.sh .
+    chmod +x dse_run.sh || { echo "Failed to set execute permissions"; exit 1; }
+    
     echo "✅ DSE installation complete!"
 
     popd > /dev/null || { echo "Failed to return to previous directory"; exit 1; }
@@ -260,3 +265,4 @@ install_cbmc
 install_static_analysis
 install_esbmc
 install_afl
+install_dse

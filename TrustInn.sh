@@ -231,7 +231,7 @@ install_dse() {
     git clone https://github.com/555shivv/tool.git || { echo "Error: Failed to clone repository!"; exit 1; }
     mv tool/PyExZ3-clone .
     rm -rf tool
-    mv PyExZ3/dse_run.sh .
+    mv PyExZ3-clone/dse_run.sh .
     chmod +x dse_run.sh || { echo "Failed to set execute permissions"; exit 1; }
     sed -i "s|^export INSTALL_PATH=.*|export INSTALL_PATH=\"$INSTALL_PATH\"|" dse_run.sh
     

@@ -2,9 +2,12 @@ import subprocess
 import os
 import pty
 import tkinter as tk
-from tkinter import ttk, filedialog
+from tkinter import ttk, filedialog, Toplevel
+from tkinter import messagebox
+import markdown2
+import webbrowser
 
-tool_install_path = "/home/test/Documents/TrustInn"
+tool_install_path = ""
 
 # Helper functions
 def set_window_size(window, percentage):
@@ -22,6 +25,56 @@ def set_window_size(window, percentage):
 	position_y = (screen_height - window_height) // 2
 
 	window.geometry(f"{window_width}x{window_height}+{position_x}+{position_y}")
+
+def open_readme_in_browser(tool_name):
+    readme_files = {
+        "CBMC": "./C-Tools/CBMC/README.md",
+        "KLEEMA": "./C-Tools/KLEEMA/README.md",
+        "KLEE-TX": "./C-Tools/KLEE-TX/README.md",
+        "MCDC-TX": "./C-Tools/MCDC-TX/README.md",
+        "SC-MCC-CBMC": "./C-Tools/SC-MCC-CBMC/README.md",
+        "Static-Analysis": "./C-Tools/StaticAnalysis/README.md",
+        "ESBMC": "./Python-Tools/ESBMC/README.md",
+        "DSE": "./Python-Tools/DSE/README.md",
+        "AFL": "./Python-Tools/AFL/README.md"
+    }
+
+    file_path = readme_files.get(tool_name)
+    
+    if not file_path or not os.path.isfile(file_path):
+        messagebox.showinfo("Coming Soon", f"{tool_name} documentation is coming soon!")
+        return  
+    
+    if file_path:
+        with open(file_path, "r", encoding="utf-8") as f:
+            md_content = f.read()
+            html_content = markdown2.markdown(md_content, extras=["fenced-code-blocks"])
+
+        html_template = f"""
+        <html>
+        <head>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-dark.css">
+            <style>
+                body {{
+                    font-family: Arial, sans-serif;
+                    max-width: 900px;
+                    margin: auto;
+                    padding: 20px;
+                }}
+            </style>
+        </head>
+        <body class="markdown-body">
+            {html_content}
+        </body>
+        </html>
+        """
+
+        temp_html_path = os.path.join(tool_install_path, ".temp_readme.html")
+        with open(temp_html_path, "w", encoding="utf-8") as f:
+            f.write(html_template)
+
+        webbrowser.open(temp_html_path)
+
 
 def browse_file(text, type, file_entry):
     filename = filedialog.askopenfilename(filetypes=[(text, type)])
@@ -298,6 +351,31 @@ MainWindow.title("TrustInn")
 MainWindow.iconphoto(True, tk.PhotoImage(file=icon_path))
 set_window_size(MainWindow, 0.75)
 MainWindow.resizable(True, True)
+
+# Menu bar
+menu_bar = tk.Menu(MainWindow)
+MainWindow.config(menu=menu_bar)
+
+help_menu = tk.Menu(menu_bar, tearoff=0)
+
+# C-Tools Submenu
+c_tools_menu = tk.Menu(help_menu, tearoff=0)
+c_tools = ["CBMC", "KLEEMA", "KLEE-TX", "MCDC-TX", "SC-MCC-CBMC", "Static-Analysis"]
+for tool in c_tools:
+    c_tools_menu.add_command(label=tool, command=lambda t=tool: open_readme_in_browser(t))
+
+# Python-Tools Submenu
+python_tools_menu = tk.Menu(help_menu, tearoff=0)
+python_tools = ["ESBMC", "DSE", "AFL"]
+for tool in python_tools:
+    python_tools_menu.add_command(label=tool, command=lambda t=tool: open_readme_in_browser(t))
+
+# Add Submenus to Help
+help_menu.add_cascade(label="C-Tools", menu=c_tools_menu)
+help_menu.add_cascade(label="Python-Tools", menu=python_tools_menu)
+
+# Add Help Menu to Menu Bar
+menu_bar.add_cascade(label="Help", menu=help_menu)
 
 # Tab group
 Notebook = ttk.Notebook(MainWindow)

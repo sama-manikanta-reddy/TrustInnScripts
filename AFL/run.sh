@@ -69,6 +69,7 @@ ulimit -c unlimited
 
 $SCRIPT_DIR/set_core_pattern
 
+
 # Step 4: Ensure the input directory exists
 if [ ! -d "$NEW_INPUT_DIR" ]; then
     echo "[-] Error: Input directory '$NEW_INPUT_DIR' does not exist."
@@ -85,7 +86,8 @@ export AFL_MAP_SIZE=10000000
 
 # Step 6: Start AFL++ fuzzing and preserve table format
 echo "[+] Starting AFL++ fuzzing for 60 seconds on $NEW_TEST_SCRIPT using inputs from $NEW_INPUT_DIR..."
-script -q -c "timeout 5s py-afl-fuzz -i \"$NEW_INPUT_DIR\" -o \"$OUTPUT_DIR\" -- \"$VENV_DIR/bin/python\" \"$NEW_TEST_SCRIPT\"" /dev/null | tee "$RESULT_FILE"
+script -q -c "timeout 60s py-afl-fuzz -i \"$NEW_INPUT_DIR\" -o \"$OUTPUT_DIR\" -t 5000 -- \"$VENV_DIR/bin/python\" \"$NEW_TEST_SCRIPT\"" /dev/null | tee "$RESULT_FILE"
+
 
 echo "[+] AFL++ fuzzing completed. Results saved in $RESULT_FILE"
 echo "[+] Log saved to $LOG_FILE"

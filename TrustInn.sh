@@ -40,7 +40,7 @@ validate_install_path() {
 setup_gui(){
 
     echo "Installing GUI..."
-    sudo apt install python3-tk python3-markdown2 -y || { echo "Failed to install python3 dependencies"; exit 1; }
+    sudo apt install python3-tk python3-markdown2 -y || { echo "Failed to install python3-tk"; exit 1; }
     echo "Downloading python script from GitHub..."
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/GUI.py" -O GUI.py || { echo "Failed to download GUI.py"; exit 1; }
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/logo.png" -O logo.png || { echo "Failed to download logo.png"; exit 1; }
@@ -211,7 +211,7 @@ install_afl() {
     fi
 
     rm -rf ../AFLplusplus
-
+    
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/AFL/README.md" -O README.md
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/AFL/set_core_pattern.c" -O set_core_pattern.c
     wget -q "https://raw.githubusercontent.com/sama-manikanta-reddy/TrustInnScripts/refs/heads/main/AFL/run.sh" -O run.sh

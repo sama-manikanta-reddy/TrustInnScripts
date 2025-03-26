@@ -13,17 +13,20 @@ This document provides step-by-step instructions to install the **Static Analysi
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Tested Versions](#tested-versions)
-3. [Prerequisites](#prerequisites)
-4. [Step-by-Step Installation](#step-by-step-installation)
-   - [Step 1: Update System](#step-1-update-system)
-   - [Step 2: Install LLVM and Clang](#step-2-install-llvm-and-clang)
-   - [Step 3: Installing Frama-C via opam](#step-3-installing-frama-c-via-opam)
-   - [Step 4: Install Static Analysis Tool](#step-4-install-static-analysis-tool)
-5. [Verification](#verification)
-6. [Troubleshooting](#troubleshooting)
-7. [Additional Resources](#additional-resources)
+- [\[Internal Documentation\] Static Analysis Tool Installation Guide](#internal-documentation-static-analysis-tool-installation-guide)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Tested Versions](#tested-versions)
+  - [Prerequisites](#prerequisites)
+  - [Step-by-Step Installation](#step-by-step-installation)
+    - [Step 1: Update System](#step-1-update-system)
+    - [Step 2: Install LLVM and Clang](#step-2-install-llvm-and-clang)
+    - [Step 3: Installing Frama-C via opam](#step-3-installing-frama-c-via-opam)
+    - [Step 4: Install Static Analysis Tool](#step-4-install-static-analysis-tool)
+  - [Verification](#verification)
+  - [Evaluating Different Types of C Programs with Static Analysis](#evaluating-different-types-of-c-programs-with-static-analysis)
+  - [Troubleshooting](#troubleshooting)
+  - [Additional Resources](#additional-resources)
 
 ---
 
@@ -166,6 +169,197 @@ To verify the installation, run the following command:
 If the installation of all the tools was successful, you should see the result directory created for the c-file.
 
 ---
+
+
+
+
+
+
+
+## Evaluating Different Types of C Programs with Static Analysis
+
+
+<table>
+  <tr>
+    <th>Type of Programme</th>
+    <th>Programme Name</th>
+    <th>Testing Status</th>
+    <th>Reasons for Failure (if any)</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Arrays</td>
+    <td>Min-Max</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Reverse Array</td>
+    <td>Pass</td>
+    <td> N/A</td>
+  </tr>
+  <tr>
+    <td>Spiral Matrix</td>
+    <td>Fail</td>
+    <td>[Frama-C] For multi-dimensional arrays, variable length is only supported on the first dimension.</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Control Flow</td>
+    <td>Recursion (Fibonacci)</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Goto Statements</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>If Else</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Data Structures</td>
+    <td>BST Operation</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Queue using Linked Lists</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Stacked Array</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  
+  <tr>
+    <td rowspan="3">File Handling</td>
+    <td>File Read Operations</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>File Write Operations</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Structure File Handling</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Functions</td>
+    <td>Basic Function</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Function Pointer</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Tower of Hanoi</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+<tr>
+    <td rowspan="3">Multithreading</td>
+    <td>Mutex Example</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Producer Consumer</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Thread Creation</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+<tr>
+    <td rowspan="3">Pattern Matching</td>
+    <td>KMP Algorithm</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Rabin-Karp Algorithm</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Substring Search</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+<tr>
+    <td rowspan="3">Pointers</td>
+    <td>Function Pointers</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Pointer Arithmetic</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Linked List Operations</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Sorting</td>
+    <td>Merge Sort</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Quick Sort</td>
+    <td>Fail</td>
+    <td>[eva] User Error: Deferred error message was emitted during the execution. <br>
+        [kernal] Plug-in eva aborted: invalid user input</td>
+  </tr>
+  <tr>
+    <td>Bubble Sort</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Strings</td>
+    <td>Palindorme Check</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Reverse a String</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>String token</td>
+    <td>Pass</td>
+    <td>N/A</td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
 
 ## Troubleshooting
 

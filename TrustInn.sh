@@ -7,7 +7,7 @@ validate_install_path() {
     # Check if the path is empty
     if [[ -z "$install_path" ]]; then
         echo "Error: No installation path provided."
-        echo "Usage: $0 <installation_folder_path>"
+        echo "Usage: $0 <installation_folder_path> <auto-delete-days>"
         exit 1
     fi
 
@@ -53,6 +53,29 @@ setup_gui(){
     fi
 
     echo "✅ GUI setup complete!"
+}
+
+setup_auto_delete() {
+    local target_dir="$1"
+    local delay_days="$2"
+
+    if [[ -z "$target_dir" || -z "$delay_days" ]]; then
+        echo "Usage: setup_auto_delete <directory_path> <delay_in_days>"
+        return 1
+    fi
+
+    # Ensure 'at' is installed
+    if ! command -v at &> /dev/null; then
+        echo "Installing at..."
+        sudo apt-get install -y at || { echo "Failed to install at"; exit 1; }
+        sudo systemctl enable atd
+        sudo systemctl start atd
+    fi
+
+    # Schedule deletion
+    echo "rm -rf \"$target_dir\"" | at now + "$delay_days" days
+
+    echo "✅ Directory $target_dir will be deleted in $delay_days days."
 }
 
 # Function to install cbmc
@@ -268,6 +291,10 @@ trap "kill $SUDO_KEEPALIVE_PID" EXIT
 echo "Updating package lists..."
 sudo apt update -y || { echo "Failed to update package lists"; exit 1; }
 sudo apt upgrade -y || { echo "Failed to upgrade packages"; exit 1; }
+
+if [[ -n "$2" ]]; then
+    setup_auto_delete "$INSTALL_PATH" "$2"
+fi
 
 setup_gui
 install_cbmc
